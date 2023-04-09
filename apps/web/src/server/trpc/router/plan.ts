@@ -14,14 +14,18 @@ const defaultPlanSelect = Prisma.validator<Prisma.PlanSelect>()({
 
 export const planRouter = router({
   all: publicProcedure.query(({ ctx }) =>
-    ctx.prisma.plan.findMany({ orderBy: { updatedAt: "desc" } })
+    ctx.prisma.plan.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+    })
   ),
   add: publicProcedure
     .input(
       z.object({
         id: z.string().uuid().optional(),
-        userId: z.string().cuid(),
         title: z.string(),
+        userId: z.string().cuid(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -35,7 +39,10 @@ export const planRouter = router({
     .input(z.object({ id: z.string().uuid() }))
     .query(async ({ ctx, input }) => {
       const { id } = input;
-      const plan = await ctx.prisma.plan.findUnique({ where: { id } });
+      const plan = await ctx.prisma.plan.findUnique({
+        where: { id },
+        include: { messages: true },
+      });
       return plan;
     }),
 });

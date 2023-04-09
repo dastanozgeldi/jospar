@@ -8,7 +8,6 @@ export enum Creator {
 export interface MessageProps {
   text: string;
   from: Creator;
-  key: number;
 }
 
 export const ChatMessage = ({ text, from }: MessageProps) => {

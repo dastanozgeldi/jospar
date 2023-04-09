@@ -28,6 +28,8 @@ export const ChatContext = ({ onSend, disabled }: InputProps) => {
   const [time, setTime] = useState("");
   const [resources, setResources] = useState(false);
 
+  const [title, setTitle] = useState("");
+
   const sendInput = () => {
     onSend(pointA, pointB, time, resources);
     setPointA("");
@@ -111,21 +113,27 @@ export const ChatContext = ({ onSend, disabled }: InputProps) => {
         </button>
 
         {/* New Plan */}
-        <button
-          className={clsx(
-            styles.button,
-            "absolute bottom-4 m-auto justify-center w-[90%]"
-          )}
-          onClick={() => {
-            console.log({ pointA, userId: session?.user?.id });
-            addPlan.mutateAsync({
-              title: "Second title",
-              userId: session?.user?.id!,
-            });
-          }}
-        >
-          <FaPlus className="w-5 h-5" /> New Plan
-        </button>
+        <div className="absolute bottom-4 m-auto justify-center w-[90%] space-y-3">
+          <input
+            value={title}
+            onChange={(ev: any) => setTitle(ev.target.value)}
+            className="w-full rounded-lg bg-transparent px-3 py-2 text-gray-800 focus:outline-none dark:text-gray-100 border-gray-500 border"
+            placeholder="New plan title"
+            disabled={disabled}
+          />
+          <button
+            className={clsx(styles.button, "justify-center w-full")}
+            onClick={() => {
+              console.log({ pointA, userId: session?.user?.id });
+              addPlan.mutateAsync({
+                title,
+                userId: session?.user?.id!,
+              });
+            }}
+          >
+            <FaPlus className="w-5 h-5" /> New Plan
+          </button>
+        </div>
       </div>
     </section>
   );
