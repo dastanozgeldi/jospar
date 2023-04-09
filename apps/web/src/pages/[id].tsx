@@ -10,7 +10,11 @@ const PlanPage = () => {
       <div className="mt-10 space-y-3 px-4 m-auto">
         {plan &&
           plan.messages.map((message) => (
-            <ChatMessage text={message.content} from={plan.userId ? 0 : 1} />
+            <ChatMessage
+              key={message.id}
+              text={message.content}
+              from={plan.userId ? 0 : 1}
+            />
           ))}
         {plan?.messages.length == 0 && (
           <p className="text-center text-gray-400">

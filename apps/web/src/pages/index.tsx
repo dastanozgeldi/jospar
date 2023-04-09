@@ -56,8 +56,8 @@ export default function Home() {
     <>
       <main className="max-w-2xl">
         <div className="mt-10 space-y-3 px-4 m-auto">
-          {messages.map(({ key, text, from }: MessageProps) => (
-            <ChatMessage key={key} text={text} from={from} />
+          {messages.map(({ text, from }: MessageProps) => (
+            <ChatMessage key={text} text={text} from={from} />
           ))}
           {messages.length == 0 && (
             <p className="text-center text-gray-400">
