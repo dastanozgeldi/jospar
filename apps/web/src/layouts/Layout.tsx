@@ -47,7 +47,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       <div className={poppins.className}>
         <div className="flex">
           <div className="fixed w-1/5 border-r border-r-gray-600">
-            <Sidebar mounted={mounted} links={links} />
+            <Sidebar mounted={mounted} />
           </div>
           <main ref={parent} className="mx-auto ml-[20%] w-full p-4">
             {children}
