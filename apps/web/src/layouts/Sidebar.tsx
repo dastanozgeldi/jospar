@@ -4,12 +4,10 @@ import { Logo } from "./Logo";
 import Link from "next/link";
 import clsx from "clsx";
 import { IoChatbox } from "react-icons/io5";
-import { type Plan } from "@prisma/client";
 import { trpc } from "src/utils/trpc";
 
 type SidebarProps = {
   mounted: boolean;
-  plans: Plan[];
 };
 
 export const Sidebar = ({ mounted }: SidebarProps) => {
