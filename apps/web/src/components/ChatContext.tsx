@@ -7,6 +7,7 @@ import { BiLogInCircle } from "react-icons/bi";
 import { Avatar } from "./common/Avatar";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
+import { trpc } from "../utils/trpc";
 
 interface InputProps {
   onSend: (
@@ -20,6 +21,7 @@ interface InputProps {
 
 export const ChatContext = ({ onSend, disabled }: InputProps) => {
   const { data: session } = useSession();
+  const utils = trpc.useContext();
 
   const [pointA, setPointA] = useState("");
   const [pointB, setPointB] = useState("");
@@ -33,6 +35,12 @@ export const ChatContext = ({ onSend, disabled }: InputProps) => {
     setTime("");
     setResources(false);
   };
+
+  const addPlan = trpc.plan.add.useMutation({
+    async onSuccess() {
+      await utils.plan.all.invalidate();
+    },
+  });
 
   return (
     <section className="p-4">
@@ -49,7 +57,9 @@ export const ChatContext = ({ onSend, disabled }: InputProps) => {
             <BiLogInCircle size={32} />
           </button>
         )}
-        <button className="py-2 px-4 dark:bg-white dark:text-black bg-black text-white rounded-lg font-medium">Share</button>
+        <button className="py-2 px-4 dark:bg-white dark:text-black bg-black text-white rounded-lg font-medium">
+          Share
+        </button>
       </div>
       <div className="flex flex-col gap-6 justify-center dark:border-gray-700">
         <h1 className="text-3xl font-bold">Context</h1>
@@ -94,7 +104,7 @@ export const ChatContext = ({ onSend, disabled }: InputProps) => {
         >
           Send
           {disabled ? (
-            <img src="loading.gif" alt="Loading" width={40} height={40} />
+            <img src="loading.gif" alt="Loading" width={16} height={16} />
           ) : (
             <IoSend className="h-4 w-4" />
           )}
@@ -106,6 +116,13 @@ export const ChatContext = ({ onSend, disabled }: InputProps) => {
             styles.button,
             "absolute bottom-4 m-auto justify-center w-[90%]"
           )}
+          onClick={() => {
+            console.log({ pointA, userId: session?.user?.id });
+            addPlan.mutateAsync({
+              title: "Second title",
+              userId: session?.user?.id!,
+            });
+          }}
         >
           <FaPlus className="w-5 h-5" /> New Plan
         </button>

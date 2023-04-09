@@ -7,14 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model Plan {
-//   id       String    @id @default(uuid())
-//   title    String
-//   messages Message[]
+model Plan {
+  id        String    @id @default(uuid())
+  title     String
+  messages  Message[]
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime  @unique @default(now())
+  updatedAt DateTime  @unique @default(now()) @updatedAt
+}
 
-// }
-
-// model Message {}
+model Message {
+  id        String   @id @default(uuid())
+  content   String
+  plan      Plan?    @relation(fields: [planId], references: [id])
+  planId    String?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @unique @default(now())
+  updatedAt DateTime @unique @default(now()) @updatedAt
+}
 
 model Account {
   id                String  @id @default(cuid())
@@ -51,6 +63,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  messages      Message[]
+  plans         Plan[]
 }
 
 model VerificationToken {

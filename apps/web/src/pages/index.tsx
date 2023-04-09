@@ -1,6 +1,7 @@
 import useState from "react-usestateref";
 import { Creator, ChatMessage, MessageProps } from "../components/ChatMessage";
 import { ChatContext } from "../components/ChatContext";
+import { Sidebar } from "../layouts/Sidebar";
 
 export default function Home() {
   const [messages, setMessages, messagesRef] = useState<MessageProps[]>([]);

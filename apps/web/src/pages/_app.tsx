@@ -4,6 +4,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import "src/styles/globals.css";
 import { Layout } from "../layouts/Layout";
+import { trpc } from "src/utils/trpc";
 
 const App: AppType<{ session: Session | null }> = ({
   Component,
@@ -20,4 +21,4 @@ const App: AppType<{ session: Session | null }> = ({
   );
 };
 
-export default App;
+export default trpc.withTRPC(App);
