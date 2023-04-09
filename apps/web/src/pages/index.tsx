@@ -1,7 +1,6 @@
 import useState from "react-usestateref";
 import { Creator, ChatMessage, MessageProps } from "../components/ChatMessage";
 import { ChatContext } from "../components/ChatContext";
-import { Sidebar } from "../layouts/Sidebar";
 
 export default function Home() {
   const [messages, setMessages, messagesRef] = useState<MessageProps[]>([]);
@@ -21,7 +20,6 @@ export default function Home() {
         " Also, please provide links to each section for further learning."
       }`,
       from: Creator.Me,
-      key: new Date().getTime(),
     };
 
     setMessages([...messagesRef.current, myMessage]);
@@ -42,7 +40,6 @@ export default function Home() {
       const botMessage: MessageProps = {
         text: response.text,
         from: Creator.Bot,
-        key: new Date().getTime(),
       };
       setMessages([...messagesRef.current, botMessage]);
     } else {
