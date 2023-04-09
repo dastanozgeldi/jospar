@@ -1,16 +1,24 @@
 import useState from "react-usestateref";
 import { Creator, ChatMessage, MessageProps } from "../components/ChatMessage";
-import { ChatInput } from "../components/ChatInput";
+import { ChatContext } from "../components/ChatContext";
 
 export default function Home() {
   const [messages, setMessages, messagesRef] = useState<MessageProps[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const callApi = async (pointA: string, pointB: string) => {
+  const callApi = async (
+    pointA: string,
+    pointB: string,
+    time: string,
+    resources: boolean
+  ) => {
     setLoading(true);
 
     const myMessage: MessageProps = {
-      text: `Currently, I'm at ${pointA}. I want to achieve ${pointB}. Create me a plan to succeed this.`,
+      text: `Currently, I'm a ${pointA}. I want to achieve ${pointB}. Create me a plan to succeed this goal in ${time}.${
+        resources &&
+        " Also, please provide links to each section for further learning."
+      }`,
       from: Creator.Me,
       key: new Date().getTime(),
     };
@@ -44,24 +52,27 @@ export default function Home() {
   };
 
   return (
-    <main className="relative mx-auto max-w-2xl">
-      <div className="sticky top-0 w-full px-4 pt-10">
-        <ChatInput
-          onSend={(pointA, pointB) => callApi(pointA, pointB)}
+    <>
+      <main className="max-w-2xl">
+        <div className="mt-10 space-y-3 px-4 m-auto">
+          {messages.map(({ key, text, from }: MessageProps) => (
+            <ChatMessage key={key} text={text} from={from} />
+          ))}
+          {messages.length == 0 && (
+            <p className="text-center text-gray-400">
+              What do you want to learn today?
+            </p>
+          )}
+        </div>
+      </main>
+      <div className="fixed top-0 right-0 w-1/5 h-screen border-l-gray-500 border-l">
+        <ChatContext
+          onSend={(pointA, pointB, time, resources) =>
+            callApi(pointA, pointB, time, resources)
+          }
           disabled={loading}
         />
       </div>
-
-      <div className="mt-10 space-y-3 px-4">
-        {messages.map(({ key, text, from }: MessageProps) => (
-          <ChatMessage key={key} text={text} from={from} />
-        ))}
-        {messages.length == 0 && (
-          <p className="text-center text-gray-400">
-            What do you want to learn today?
-          </p>
-        )}
-      </div>
-    </main>
+    </>
   );
 }

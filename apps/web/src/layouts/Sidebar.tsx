@@ -17,7 +17,6 @@ type SidebarProps = {
 };
 
 export const Sidebar = ({ mounted, links }: SidebarProps) => {
-  const { data: session } = useSession();
   const icons = {
     Home: <FaHome className="text-primary" size={24} />,
     Chat: <FaRobot className="text-primary" size={24} />,
@@ -44,8 +43,9 @@ export const Sidebar = ({ mounted, links }: SidebarProps) => {
   return (
     <aside className="relative h-screen p-4">
       <Logo withText={isBigScreen} />
-      <div className="my-8 flex flex-col">
-        {links.map((l) => (
+      {/* TODO: MAP PLANS(CONVERSATIONS) */}
+      {/* <div className="my-8 flex flex-col"> */}
+      {/* {links.map((l) => (
           <Link
             key={l.label}
             href={l.href}
@@ -54,28 +54,12 @@ export const Sidebar = ({ mounted, links }: SidebarProps) => {
               "sm:flex sm:items-center sm:gap-3"
             )}
           >
-            {/* @ts-ignore */}
             {icons[l.label]} {isBigScreen && l.label}
           </Link>
-        ))}
-      </div>
+        ))} */}
+      {/* </div> */}
       <div className="absolute bottom-0 my-4 flex flex-col items-center justify-center gap-2 p-4 text-xl sm:flex-row">
         <ToggleTheme mounted={mounted} />
-
-        <div className="flex items-center justify-around gap-2 text-3xl md:text-4xl">
-          {session ? (
-            <Link
-              href="/dashboard"
-              className="rounded-full ring-gray-300 hover:ring-2"
-            >
-              <Avatar src={session.user?.image} size={32} />
-            </Link>
-          ) : (
-            <button className="text-xl" onClick={() => signIn()}>
-              <BiLogInCircle size={32} />
-            </button>
-          )}
-        </div>
       </div>
     </aside>
   );
