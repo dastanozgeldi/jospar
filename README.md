@@ -1,9 +1,9 @@
 # nFactorial-AI-Cup-AppTrack
 
-## < Your Name >
+## Dastan Ozgeldi
 
 
-## < Your App's Name >
+## Jospar
 
 
 ## Typeform to submit:
