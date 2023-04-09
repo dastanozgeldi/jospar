@@ -5,6 +5,7 @@ import { trpc } from "src/utils/trpc";
 const PlanPage = () => {
   const { query } = useRouter();
   const { data: plan } = trpc.plan.byId.useQuery({ id: query.id as string });
+
   return (
     <div>
       <div className="mt-10 space-y-3 px-4 m-auto">

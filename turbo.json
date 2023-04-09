@@ -12,5 +12,13 @@
     "dev": {
       "cache": false
     }
-  }
+  },
+  "globalEnv": [
+    "NODE_ENV",
+    "VERCEL_URL",
+    "DATABASE_URL",
+    "OPENAI_API_KEY",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET"
+  ]
 }
