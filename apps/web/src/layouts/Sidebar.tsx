@@ -5,6 +5,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { IoChatbox } from "react-icons/io5";
 import { trpc } from "src/utils/trpc";
+import { type Plan } from "@prisma/client";
 
 type SidebarProps = {
   mounted: boolean;
@@ -37,7 +38,7 @@ export const Sidebar = ({ mounted }: SidebarProps) => {
       {/* TODO: MAP PLANS(CONVERSATIONS) */}
       <div className="my-8 flex flex-col">
         {plans &&
-          plans.map((plan) => (
+          plans.map((plan: Plan) => (
             <Link
               key={plan.id}
               href={`/${plan.id}`}
